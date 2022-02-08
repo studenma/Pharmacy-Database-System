@@ -1,0 +1,15 @@
+<%= simple_form_for(@drug) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  		<%= f.input :name, label: 'Název', required: true %>
+  		<%= f.input :price, label: 'Cena', required: true %>
+      <%= f.input :prescription, label: 'Na předpis' %>
+      <%= f.input :supplier_id, label: 'Dodavatel', collection: Supplier.all, prompt: "Zadejte Dodavatele", required: true%>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, value: "Potvrdit" %>
+  </div>
+<% end %>

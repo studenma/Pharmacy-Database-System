@@ -1,0 +1,40 @@
+<div class="table-responsive well" id="filterrific_results">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Název</th>
+          <th>Cena</th>
+          <th>Na předpis</th>
+          <th>Množství na pobočce</th>
+          <th class='text-center'>Objednat</th>
+          <th class='text-center'>Detail</th>
+          <th class='text-center'>Upravit lék</th>
+          <th class='text-center'>Smazat lék</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <% @drugs.each do |drug| %>
+          <tr>
+            <td><%= drug.name %></td>
+            <td><%= drug.price %> Kč</td>
+            <td style = "padding-left: 3em">
+              <% if drug.prescription %> 
+                <span class='glyphicon glyphicon-ok'</span>
+              <% else %>
+                <span class='glyphicon glyphicon-remove'</span>
+              <% end %>
+            </td>
+            <td class='text-center'><%= getAmount current_user.branch_id, drug.id %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-copy'> </span>".html_safe, "/orders/new" %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-eye-open'> </span>".html_safe, drug %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-pencil'> </span>".html_safe, edit_drug_path(drug) %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-remove-sign'> </span>".html_safe, drug, method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  
+    <%= paginate @drugs %>
+  
+</div>

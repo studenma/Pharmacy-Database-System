@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lekarna</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+      <nav class="navbar navbar-default navbar-green navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="/"><img src="/DrMin.png" alt="DR-Min" id="logo"></a>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="/sales/new" class="whitetext">PRODEJ</a></li>
+              <li><a href="/drugs" class="whitetext">Sortiment</a></li>
+              <li><a href="/reservations" class="whitetext">Rezervace</a></li>
+              <li><a href="/sales" class="whitetext">Historie prodejů</a></li>
+              <% if current_user && (current_user.manažer? || current_user.admin?) %>
+                <li><a href="/orders" class="whitetext">Objednávky</a></li>
+                <li><a href="/branches" class="whitetext">Pobočky</a></li>
+                <li><a href="/suppliers" class="whitetext">Dodavatelé</a></li>
+                <li><a href="/insurers" class="whitetext">Pojišťovny</a></li>
+                <li><a href="/users" class="whitetext">Uživatelé</a></li>
+              <% end %>
+            </ul>
+            <p class="navbar-text navbar-right" style="color: black">
+              <% if user_signed_in? %>
+                <strong><%= current_user.branch.address + '-' + current_user.email %> | </strong>
+                <%= link_to "Odhlásit", destroy_user_session_path, method: :delete, :class => 'navbar-link', :style => "color: black"  %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        <% if notice %>
+          <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+        <%= yield %>
+      </div>
+
+      <footer>
+          <div class="container">
+            ©DR-MIN <%= Time.now.year %>
+          </div>
+        </footer>
+  </body>
+</html>

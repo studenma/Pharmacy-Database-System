@@ -1,0 +1,22 @@
+<%= simple_form_for(@reservation) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+  	<%= f.input :customer, label: 'Jméno zákazníka', required: true %>
+  	<%= f.input :date, label: 'Očekávané datum vyzvednutí', required: true %>
+    <%= f.association :branch, label: 'Pobočka', collection: Branch.all.order(:address), label_method: :address, prompt: "Zvolte pobočku", required: true %>
+  </div>
+
+  <div id="reservation_drugs">
+      <%= f.simple_fields_for :reservation_drugs do |reservation_drug| %>
+        <%= render 'reservation_drug_fields', f: reservation_drug%>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'Přidat lék', f, :reservation_drugs, :class => 'btn btn-default' %>
+      </div>
+    </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, value: "Potvrdit" %>
+  </div>
+<% end %>

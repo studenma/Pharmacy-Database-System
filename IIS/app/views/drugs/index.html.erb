@@ -1,0 +1,30 @@
+<h1>Sortiment - <%= Branch.find(current_user.branch_id).address %></h1>
+
+<%= form_for_filterrific @filterrific, :remote => true do |f| %>
+<div>
+  Vyhledat:
+  <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+  <%= f.text_field(
+    :search_query,
+    class: 'filterrific-periodically-observed'
+  ) %>
+  <%= link_to(
+    'Zrušit filtr',
+    reset_filterrific_url,
+  ) %>
+</div>
+
+<br>
+ 
+<%# add an automated spinner to your form when the list is refreshed %>
+<%= render_filterrific_spinner %>
+<% end %>
+
+<%= render(
+partial: 'drugs/list',
+locals: { drugs: @drugs }
+) %>
+
+<br>
+
+<%= button_to 'Vložit nový lék', new_drug_path, method: :get  %>

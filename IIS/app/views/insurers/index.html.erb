@@ -1,0 +1,37 @@
+<h1>Pojišťovny</h1>
+<div class="table-responsive well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>IČO</th>
+        <th>Název</th>
+        <th class='text-center'>Kód</th>
+        <th class='text-center'>Detail</th>
+        <th class='text-center'>Upravit</th>
+        <th class='text-center'>Smazat</th>
+        <th class='text-center'>Importovat příspěvky</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @insurers.each do |insurer| %>
+        <tr>
+          <td><%= insurer.orgid %></td>
+          <td><%= insurer.name %></td>
+          <td class='text-center'><%= insurer.code %></td>        
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-eye-open'> </span>".html_safe, insurer %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-pencil'> </span>".html_safe, edit_insurer_path(insurer) %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-remove-sign'> </span>".html_safe, insurer, method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-download-alt'> </span>".html_safe, "", method: :get %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+    <%= paginate @insurers %>
+  
+</div>
+
+<br>
+
+<%= button_to 'Přidat pojišťovnu', new_insurer_path, method: :get %>

@@ -1,0 +1,11 @@
+<%= simple_form_for(@branch) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :address, label: 'Adresa', required: true %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, value: "Potvrdit" %>
+  </div>
+<% end %>

@@ -1,0 +1,22 @@
+<%= simple_form_for(@order) do |f| %>
+<%= f.error_notification %>
+
+<div class="form-inputs">
+  <%= f.association :branch, label: 'Pobočka', collection: Branch.all.order(:address), label_method: :address, prompt: "Zvolte pobočku", required: true %>
+  <%= f.input :dateOrdered, :as => :hidden, :input_html => { :value => Time.now } %>
+  <%= f.input :pending, :as => :hidden, :input_html => { :value => "true" } %>
+</div>
+
+<div id="order_drugs">
+    <%= f.simple_fields_for :order_drugs do |order_drug| %>
+      <%= render 'order_drug_fields', f: order_drug%>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'Přidat lék', f, :order_drugs, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<div class="form-actions">
+  <%= f.button :submit, value: "Potvrdit" %>
+</div>
+<% end %>

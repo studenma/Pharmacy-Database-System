@@ -1,0 +1,29 @@
+<h1><%= @insurer.name %></h1>
+<h3>Seznam léků, na které pojišťovna přispívá</h3>
+
+<div class="table-responsive well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Název léku</th>
+        <th>Přispívá</th>
+      </tr>
+    </thead>
+
+    <tbody>
+	    <% @contributions.each do |contribution| %>
+          <tr>
+            <td><%= Drug.find(contribution.drug_id).name %></td>
+            <td><%= contribution.amount%>Kč</td>
+          </tr>
+	    <% end %>
+    </tbody>
+
+  </table>
+
+  <%= paginate @contributions %>
+
+</div>
+
+<%= link_to 'Upravit', edit_insurer_path(@insurer) %> |
+<%= link_to 'Zpět', insurers_path %>

@@ -1,0 +1,30 @@
+<h1>Rezervace</h1>
+
+<%= form_for_filterrific @filterrific, :remote => true do |f| %>
+<div>
+  Vyhledat zákazníka:
+  <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+  <%= f.text_field(
+    :search_query,
+    class: 'filterrific-periodically-observed'
+  ) %>
+  <%= link_to(
+    'Zrušit filtr',
+    reset_filterrific_url,
+  ) %>
+</div>
+
+<br>
+ 
+<%# add an automated spinner to your form when the list is refreshed %>
+<%= render_filterrific_spinner %>
+<% end %>
+
+<%= render(
+partial: 'reservations/list',
+locals: { reservations: @reservations }
+) %>
+
+<br>
+
+<%= button_to 'Nová rezervace', new_reservation_path, method: :get  %>

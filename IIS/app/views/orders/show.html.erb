@@ -1,0 +1,28 @@
+<h3><%= @order.branch.address %> - <%= @order.dateOrdered.strftime("%d.%m. %Y") %></h3>
+<h4><%= @order.pending ? "Objednávka není zatím doručena" : "Objednávka doručena" %></h4>
+
+<div class="table-responsive well">
+	<table class="table">
+	    <thead>
+	      <tr>
+	        <th>Název léku</th>
+	        <th class='text-center'>Množství</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <% @order.order_drugs.each do |order| %>
+	        <tr>
+	        	<td><%= order.drug.name %></td>
+	        	<td class='text-center'><%= order.amount %></td>
+	        </tr>
+	      <% end %>
+	    </tbody>
+    </table>
+</div>
+<% if @order.pending %>
+	<%= button_to 'Označit objednávku jako dodanou', "#{ @order.id }/processOrder/#{ @order.id }", method: :post %>
+<% else %>	
+	<%= button_to 'Vrátit do stavu před objednávkou', "#{ @order.id }/deprocessOrder/#{ @order.id }", method: :post %>
+<% end %>
+<br>
+<%= link_to 'Zpět', orders_path %>

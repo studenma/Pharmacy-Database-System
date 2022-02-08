@@ -1,0 +1,36 @@
+<h1><%= @drug.name %></h1>
+<p><strong> Cena: <%= @drug.price %> Kč</strong></p>
+<p><strong> Na předpis: 
+  <% if @drug.prescription %> 
+    <span class='glyphicon glyphicon-ok'</span>
+  <% else %>
+    <span class='glyphicon glyphicon-remove'</span>
+  <% end %>
+</strong></p>
+<div class="table-responsive well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Pobočka</th>
+        <th class='text-center'>Množství na pobočce(bez zarezervovaných)</th>
+        <th class='text-center'>Rezervovaných</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @branches.each do |branch| %>
+        <tr>
+          <td><%= branch.address %></td>
+          <td class='text-center'><%= getAmount branch.id, @drug.id %></td>
+          <td class='text-center'><%= reserved branch.id, @drug.id %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= link_to 'Upravit', edit_drug_path(@drug) %> |
+<%= link_to 'Zpět', drugs_path %>

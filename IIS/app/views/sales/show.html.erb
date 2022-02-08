@@ -1,0 +1,37 @@
+<h3><%= @sale.branch.address%>, <%= @sale.created_at.strftime("%d.%m. %Y")%></h3>
+
+<div class="table-responsive well">
+	<table class="table">
+	    <thead>
+	      <tr>
+	        <th>Lék</th>
+          <th>Množství</th>
+          <th>Cena bez příspěvku</th>
+          <th>Cena s příspěvkem</th>
+          <th>Příspěvěk pojišťovny na 1ks</th>
+	        <th>Rodné číslo</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <% @sale.sale_drugs.each do |sale| %>
+	        <tr>
+	        	<td><%= sale.drug.name %></td>
+	        	<td><%= sale.amount %></td>
+            <td><%= sale.drug.price * sale.amount%>Kč</td>
+            <td><%= getPriceAfterContribution @sale, sale.drug.id, sale.drug.price, sale.amount%> </td>
+						<td><%= getContribution @sale, sale.drug.id %></td>
+						<td></td>
+	        </tr>
+	      <% end %>
+				<tr>
+					<td>Celkem</td>
+					<td></td>
+					<td><%=getTotalPrice @sale %></td>
+					<td><%=getTotalCustomerPrice @sale %></td>
+					<td></td>
+					<td><%= @sale.rc%></td>
+				</tr>
+	    </tbody>
+    </table>
+</div>
+<%= link_to 'Zpět', sales_path %>

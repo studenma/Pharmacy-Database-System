@@ -1,0 +1,22 @@
+<%= simple_form_for(@sale) do |f| %>
+<%= f.error_notification %>
+
+<div class="form-inputs">
+  <%= f.input :branch_id, :as => :hidden, :input_html => { :value => current_user.branch.id } %>
+  <%= f.association :insurer, label: 'Pojišťovna', collection: Insurer.all.order(:code), label_method: :name, prompt: "Pojišťovna zákazníka"%>
+  <%= f.input :rc, label: 'Rodné číslo'%>
+</div>
+
+<div id="sale_drugs">
+    <%= f.simple_fields_for :sale_drugs do |sale_drug| %>
+      <%= render 'sale_drug_fields', f: sale_drug%>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'Přidat lék', f, :sale_drugs, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<div class="form-actions">
+  <%= f.button :submit, value: "Evidovat Prodej" %>
+</div>
+<% end %>

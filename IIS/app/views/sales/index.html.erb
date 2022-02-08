@@ -1,0 +1,31 @@
+<h1>Historie prodejů</h1>
+<div class="table-responsive well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Pobočka</th>
+        <th class='text-center'>Celková Cena</th>     
+        <th class='text-center'>Datum</th>     
+        <th class='text-center'>Detail</th>
+        <th class='text-center'>Upravit</th>
+        <th class='text-center'>Smazat</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @sales.each do |sale| %>
+        <tr>
+          <td><%= sale.branch.address %></td>
+          <td class='text-center'><%= getTotalPrice sale%></td>
+          <td class='text-center'><%= sale.created_at.strftime("%d.%m. %Y") %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-eye-open'> </span>".html_safe, sale %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-pencil'> </span>".html_safe, edit_sale_path(sale) %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-remove-sign'> </span>".html_safe, sale, method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+    <%= paginate @sales %>
+  
+</div>

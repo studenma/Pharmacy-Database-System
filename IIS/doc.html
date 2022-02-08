@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0067)https://www.fit.vutbr.cz/study/courses/IIS/private/projekt/doc.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+
+<h1>Lékárna</h1> 
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Jakub Zapletal
+	    <a href="mailto:xzaple36@stud.fit.vutbr.cz">xzaple36@stud.fit.vutbr.cz</a> -
+		Controllery, modely, policies
+	</dd>
+	<dd>Martin Studený
+	    <a href="mailto:xstude23@stud.fit.vutbr.cz">xstude23@stud.fit.vutbr.cz</a> - 
+		Tvorba seedu, náhledy, grafické zobrazení stránky, dokumentace
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="https://lekarna.herokuapp.com">https://lekarna.herokuapp.com</a></dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<table>
+<tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>admin@drmin.com</td><td>adminpass</td><td>Administrátor</td></tr>
+<tr><td>managerPraha@drmin.com</td><td>managerpass</td><td>Manager</td></tr>
+<tr><td>managerBrno@drmin.com</td><td>managerpass</td><td>Manager</td></tr>
+<tr><td>managerOstrava@drmin.com</td><td>managerpass</td><td>Manager</td></tr>
+<tr><td>managerOlomouc@drmin.com</td><td>managerpass</td><td>Manager</td></tr>
+<tr><td>workerPraha@drmin.com</td><td>workerpass</td><td>Prodavač</td></tr>
+<tr><td>workerBrno@drmin.com</td><td>workerpass</td><td>Prodavač</td></tr>
+<tr><td>workerOstrava@drmin.com</td><td>workerpass</td><td>Prodavač</td></tr>
+<tr><td>workerOlomouc@drmin.com</td><td>workerpass</td><td>Prodavač</td></tr>
+</tbody></table>
+
+<h2>Implementace</h2>
+<p>Projekt byl implementován za použití Ruby on Rails verze 4. Použitou databází je postgreSQL. Veškeré non-default moduly použité pro projekt jsou vyznačeny v souboru <i>Gemfile</i></p>
+<p>Všechny body zadání, mimo import příspěvků pojišťovny, jsou implementovány. Byly přidány 2 role uživatelů - Admin a manager. Manager má možnost objednávat léky, potvrzovat přijetí objednávek, mazat a upravovat objednávky, prohlížet všechny tabulky systému, prodávat léky, upravovat a stornovat předchozí transakce. Admin má veškerá práva na prohlížení, tvorbu, úpravy a mazání tabulek. Zaměstnanec může prodávat léky, tvořit, upravovat a mazat rezervace.</p>
+<p>Předmět operace > controllery > modely > pohledy > definice opravnění:</p>
+<ul>
+	<li><b>Prodej</b> > app/controllers/sales_controller.rb > app/models/sale.rb, app/models/sale_drug.rb > app/views/sales/* > app/policies/sale_policy.rb</li>
+	<li><b>Objednávky</b> > app/controllers/orders_controller.rb > app/models/order.rb, app/models/order_drug.rb > app/views/orders/* > app/policies/order_policy.rb</li>
+	<li><b>Pojišťovny</b> > app/controllers/insurers_controller.rb > app/models/insurer.rb, app/models/contribution.rb > app/views/insurers/* > app/policies/insurer_policy.rb</li>
+	<li><b>Dodavatelé</b> > app/controllers/suppliers_controller.rb > app/models/supplier.rb > app/views/suppliers/* > app/policies/supplier_policy.rb</li>
+	<li><b>Léky</b> > app/controllers/drugs_controller.rb > app/models/drug.rb > app/views/drugs/* > app/policies/drug_policy.rb</li>
+	<li><b>Pobočky</b> > app/controllers/branches_controller.rb > app/models/branch.rb > app/views/branches/* > app/policies/branch_policy.rb</li>
+	<li><b>Uživatelé</b> > app/controllers/users_controller.rb > app/models/user.rb > app/views/devise/* > app/policies/user_policy.rb</li>
+</ul>
+
+<h2>Instalace</h2>
+<ul>
+<li>Požadavky: Ruby 2.2. a vyšší, Ruby on rails 4 a vyšší, postgreSQL</li>
+<li>Po stažení souborů z WISu je nutno ve složce projektu ( kdekoliv, nemusí být v kořeni ) provést tyto příkazy ke spuštění serveru:</li>
+	<ol>
+		<li><b>rails db:create</b> - Vytvoří databázi</li>
+		<li><b>rails db:migrate</b> - Vytvoří tabulky v databázi</li>
+		<li><b>rails db:seed</b> - Naplní databázi předdefinovanými daty  - viz soubor <i>db/seed.rb</i></li>
+		<li><b>rails s</b> - Spustí lokální server - systém je nyní dostupný na adrese <i>localhost:3000</i></li>
+		<li><b>rails c</b> - Pokud je spuštěný server, tento příkaz spustí interaktivní ruby konzoli pro práci se serverem</li>
+	</ol>
+<li>Pokud je z nějakého důvodu nutné znovu uvést databázi do původního stavu, postupujte prosím takto:</li>
+	<ol>
+		<li><b>rails db:drop</b></li>
+		<li><b>rails db:create</b></li>
+		<li><b>rails db:migrate</b></li>
+		<li><b>rails db:seed</b></li>
+	</ol>
+	<li>Skripty pro tvorbu databáze, které jsou automaticky spouštěny v postupu výše:</li>
+	<ul>
+		<li><b>db/seeds.rb</b> - vloží předdefinovaná data do db</li>
+		<li><b>db/schema.rb</b> - schéma databáze pro tvorbu</li>
+		<li><b>db/migrate/</b> - jednotlivé soubory tvoří a upravují tabulky v databázi tak, jak byly tvořeny v průběhu práce na projektu. Sekvenčně spuštěny v kroku 2</li>
+	</ul>
+</ul>
+
+
+<h2>Známé problémy</h2>
+<p>Náš systém má od návrhu pár změn, všechny funkce, které jsme modelovali v use case diagramu, je však možné ve výsledném systému povádět. Výjimkou je import příspěvků na léky od pojišťoven. V systému je natvrdo zadáno kolik lékárny přispívají na léky které jsou v systému předdefinované, ale není možné přidat příspěvek na lék nový. V pohledu na seznam pojišťoven je tlačítko pro import, to však nikam nevede.</p>
+
+</body></html>

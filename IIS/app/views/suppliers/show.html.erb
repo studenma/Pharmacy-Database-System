@@ -1,0 +1,26 @@
+<h1>Seznam dodávaných léků</h1>
+<h3><%= @supplier.name %></h3>
+<div class="table-responsive well">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Název léku</th>
+        <th>Cena</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+	    <% @supplier.drugs.each do |drug| %>
+	        <tr>
+	          <td><%= drug.name %></td>
+            <td><%= drug.bprice %> Kč</td>
+	        </tr>
+	      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<%= link_to 'Upravit', edit_supplier_path(@supplier) %> |
+<%= link_to 'Zpět', suppliers_path %>

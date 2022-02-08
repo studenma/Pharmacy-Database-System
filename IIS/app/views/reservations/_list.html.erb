@@ -1,0 +1,30 @@
+<div class="table-responsive well" id="filterrific_results">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Zákazník</th>
+          <th class='text-center'>Datum vyzvednutí</th>
+          <th class='text-center'>Vyřídit rezervaci</th>
+          <th class='text-center'>Detail</th>
+          <th class='text-center'>Upravit</th>
+          <th class='text-center'>Smazat</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <% @reservations.each do |reservation| %>
+          <tr>
+            <td><%= reservation.customer %></td>
+            <td class='text-center'><%= reservation.date.strftime("%d.%m. %Y") %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-list-alt'> </span>".html_safe, "/reservations/#{ reservation.id }/processReservation/#{ reservation.id }", method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-eye-open'> </span>".html_safe, reservation %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-pencil'> </span>".html_safe, edit_reservation_path(reservation) %></td>
+            <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-remove-sign'> </span>".html_safe, reservation, method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+      <%= paginate @reservations %>
+    
+  </div>

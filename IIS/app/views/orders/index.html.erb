@@ -1,0 +1,31 @@
+<h1>Objednávky</h1>
+<div class="table-responsive well">
+  <table class="table">
+    <thead>
+      <tr>
+      <th>Datum objednávky</th>
+      <th class='text-center'>Objednávka dodána</th>
+      <th class='text-center'>Detail</th>
+      <th class='text-center'>Smazat</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.dateOrdered.strftime("%d.%m. %Y") %></td>
+          <td class='text-center'><%= order.pending ? "<span class='glyphicon glyphicon-remove'> </span>".html_safe : "<span class='glyphicon glyphicon-ok'> </span>".html_safe %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-eye-open'> </span>".html_safe, order %></td>
+          <td class='text-center'><%= link_to "<span class='glyphicon glyphicon-remove-sign'> </span>".html_safe, order, method: :delete, data: { confirm: 'Jste si jisti?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @orders %>
+
+</div>
+
+<br>
+
+<%= button_to 'Nová objednávka', new_order_path, method: :get  %>

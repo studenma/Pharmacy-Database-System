@@ -1,0 +1,5 @@
+<div class="nested-fields">
+    <%= f.input :drug_id, label: 'Lék', collection: Drug.all.order(:name), prompt: "Vyberte lék", required: true%>
+    <%= f.input :amount, label: 'Kusů', required: true%>
+    <%= link_to_remove_association "Odebrat Lék", f %>
+</div>

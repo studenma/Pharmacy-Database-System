@@ -1,0 +1,25 @@
+<h1>Seznam zaměstnanců - <%= @branch.address %></h1>
+<div class="table-responsive well">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Jméno</th>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.role %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  
+    <%= paginate @users %>
+  
+  </div>
